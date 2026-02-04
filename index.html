@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>App Menu With Lock Screen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://site-assets.fontawesome.com/releases/v6.1.1/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+  <!-- 
+      Main App Container 
+      Classes used for state: 'logged-out', 'logging-in', 'verifying-log-in', 'log-in-error', 'logged-in'
+    -->
+  <div id="app" class="logged-out">
+
+    <!-- Info (Time & Weather) - Visible on Lock Screen -->
+    <!-- Info (Time & Weather) - Visible on Lock Screen -->
+    <div id="app-info" class="info">
+      <span class="time">12:00</span>
+      <span class="weather">
+        <i class="weather-type fa-duotone fa-sun"></i>
+        <span class="weather-temperature-value">--</span>
+        <span class="weather-temperature-unit">&deg;C</span>
+      </span>
+    </div>
+
+    <!-- Background Image -->
+    <div id="app-background">
+      <div id="app-background-image" class="background-image"></div>
+    </div>
+
+    <!-- PIN Wrapper -->
+    <div id="app-pin-wrapper">
+      <input id="app-pin-hidden-input" maxlength="4" type="number" value="">
+      <div id="app-pin">
+        <div class="app-pin-digit" data-index="0">
+          <span class="app-pin-digit-value"></span>
+        </div>
+        <div class="app-pin-digit" data-index="1">
+          <span class="app-pin-digit-value"></span>
+        </div>
+        <div class="app-pin-digit" data-index="2">
+          <span class="app-pin-digit-value"></span>
+        </div>
+        <div class="app-pin-digit" data-index="3">
+          <span class="app-pin-digit-value"></span>
+        </div>
+      </div>
+      <h3 id="app-pin-label">
+        Enter PIN (1234)
+        <span id="app-pin-error-text" class="hidden">Invalid</span>
+        <span id="app-pin-cancel-text">Cancel</span>
+      </h3>
+    </div>
+
+    <!-- Main Menu -->
+    <div id="app-menu">
+      <div id="app-menu-content-wrapper">
+        <div id="app-menu-content">
+
+          <!-- Menu Header -->
+          <div id="app-menu-content-header">
+            <div class="app-menu-content-header-section">
+              <div id="app-menu-info" class="info">
+                <span class="time">12:00</span>
+                <span class="weather">
+                  <i class="weather-type fa-duotone fa-sun"></i>
+                  <span class="weather-temperature-value">--</span>
+                  <span class="weather-temperature-unit">&deg;C</span>
+                </span>
+              </div>
+              <div class="reminder">
+                <div class="reminder-icon">
+                  <i class="fa-regular fa-bell"></i>
+                </div>
+                <span class="reminder-text">
+                  Modify by Artem Hordiienko
+                  <span class="reminder-time"><i class="fa-brands fa-github"></i></span>
+                </span>
+              </div>
+            </div>
+            <div class="app-menu-content-header-section">
+              <button id="sign-out-button" class="user-status-button clear-button" type="button">
+                <i class="fa-solid fa-arrow-right-from-arc"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Glass Calendar -->
+          <div id="calendar-wrapper">
+            <div id="dycalendar"></div>
+          </div>
+
+          <!-- Quick Nav -->
+          <div id="quick-nav" class="scrollable-component">
+            <div class="quick-nav-item clear-button"><span class="quick-nav-item-label">Weather</span></div>
+            <div class="quick-nav-item clear-button"><span class="quick-nav-item-label">On Repeat</span></div>
+            <div class="quick-nav-item clear-button"><span class="quick-nav-item-label">Connect</span></div>
+            <div class="quick-nav-item clear-button"><span class="quick-nav-item-label">Moments</span></div>
+          </div>
+
+          <!-- YouTube Link -->
+          <!-- GitHub Link -->
+          <a id="github-link" class="clear-button" href="https://github.com/Artem-Hordiienko" target="_blank">
+            <i class="fa-brands fa-github"></i>
+            <span>Artem Hordiienko</span>
+          </a>
+
+          <!-- Weather Section -->
+          <div id="weather-section" class="menu-section">
+            <div class="menu-section-title">
+              <i class="fa-solid fa-sun"></i>
+              <span class="menu-section-title-text">How's it look out there?</span>
+            </div>
+            <div class="menu-section-content scrollable-component">
+              <!-- Days populated statically or dynamically, simplified here to static -->
+              <div class="day-card">
+                <div class="day-card-content">
+                  <span class="day-weather-temperature">18<span
+                      class="day-weather-temperature-unit">&deg;C</span></span>
+                  <i class="day-weather-icon fa-duotone fa-sun sunny"></i>
+                  <span class="day-name">Mon</span>
+                </div>
+              </div>
+              <div class="day-card">
+                <div class="day-card-content">
+                  <span class="day-weather-temperature">22<span
+                      class="day-weather-temperature-unit">&deg;C</span></span>
+                  <i class="day-weather-icon fa-duotone fa-sun sunny"></i>
+                  <span class="day-name">Tue</span>
+                </div>
+              </div>
+              <div class="day-card">
+                <div class="day-card-content">
+                  <span class="day-weather-temperature">20<span
+                      class="day-weather-temperature-unit">&deg;C</span></span>
+                  <i class="day-weather-icon fa-duotone fa-clouds cloudy"></i>
+                  <span class="day-name">Wed</span>
+                </div>
+              </div>
+              <div class="day-card">
+                <div class="day-card-content">
+                  <span class="day-weather-temperature">16<span
+                      class="day-weather-temperature-unit">&deg;C</span></span>
+                  <i class="day-weather-icon fa-duotone fa-cloud-drizzle rainy"></i>
+                  <span class="day-name">Thu</span>
+                </div>
+              </div>
+              <div class="day-card">
+                <div class="day-card-content">
+                  <span class="day-weather-temperature">15<span
+                      class="day-weather-temperature-unit">&deg;C</span></span>
+                  <i class="day-weather-icon fa-duotone fa-cloud-bolt stormy"></i>
+                  <span class="day-name">Fri</span>
+                </div>
+              </div>
+              <div class="day-card">
+                <div class="day-card-content">
+                  <span class="day-weather-temperature">24<span
+                      class="day-weather-temperature-unit">&deg;C</span></span>
+                  <i class="day-weather-icon fa-duotone fa-sun sunny"></i>
+                  <span class="day-name">Sat</span>
+                </div>
+              </div>
+              <div class="day-card">
+                <div class="day-card-content">
+                  <span class="day-weather-temperature">20<span
+                      class="day-weather-temperature-unit">&deg;C</span></span>
+                  <i class="day-weather-icon fa-duotone fa-clouds cloudy"></i>
+                  <span class="day-name">Sun</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Music Section (Was Restaurants) -->
+          <div id="music-section" class="menu-section">
+            <div class="menu-section-title">
+              <i class="fa-solid fa-music"></i>
+              <span class="menu-section-title-text">On Repeat</span>
+            </div>
+            <div class="menu-section-content scrollable-component">
+              <a href="https://open.spotify.com/track/4Dvkj6JhhA12EX05fT7y2e" target="_blank" class="music-card">
+                <div class="music-card-content">
+                  <div class="music-card-info">
+                    <span class="music-card-title">As It Was</span>
+                    <span class="music-card-desc">Harry Styles</span>
+                  </div>
+                </div>
+                <!-- Using Unsplash for demo cover art, ideally would be real album art -->
+                <img class="music-card-background"
+                  src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" />
+              </a>
+              <a href="https://open.spotify.com/track/5PjdY0CKGZdEuoNab3yDmX" target="_blank" class="music-card">
+                <div class="music-card-content">
+                  <div class="music-card-info">
+                    <span class="music-card-title">Stay</span>
+                    <span class="music-card-desc">Kid LAROI & Justin Bieber</span>
+                  </div>
+                </div>
+                <img class="music-card-background"
+                  src="https://images.unsplash.com/photo-1621360841013-c768371e93cf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" />
+              </a>
+              <a href="https://open.spotify.com/track/0VjIjW4GlUZAMYd2vXMi3b" target="_blank" class="music-card">
+                <div class="music-card-content">
+                  <div class="music-card-info">
+                    <span class="music-card-title">Blinding Lights</span>
+                    <span class="music-card-desc">The Weeknd</span>
+                  </div>
+                </div>
+                <img class="music-card-background"
+                  src="https://images.unsplash.com/photo-1619983081563-430f63602796?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" />
+              </a>
+              <a href="https://open.spotify.com/track/37ZJ0p5Jm13JPevGcx4SkF" target="_blank" class="music-card">
+                <div class="music-card-content">
+                  <div class="music-card-info">
+                    <span class="music-card-title">Levitating</span>
+                    <span class="music-card-desc">Dua Lipa</span>
+                  </div>
+                </div>
+                <img class="music-card-background"
+                  src="https://images.unsplash.com/photo-1493225255756-d9584f8606e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" />
+              </a>
+            </div>
+          </div>
+
+          <!-- Socials Section (Was Tools) -->
+          <div id="socials-section" class="menu-section">
+            <div class="menu-section-title">
+              <i class="fa-solid fa-hashtag"></i>
+              <span class="menu-section-title-text">Connect</span>
+            </div>
+            <div class="menu-section-content scrollable-component">
+              <!-- Reusing tool-card styling logic but as social-card -->
+              <a href="https://github.com/Artem-Hordiienko" target="_blank" class="social-card">
+                <div class="social-card-background"></div>
+                <div class="social-card-content">
+                  <div class="social-card-content-header">
+                    <span class="social-card-label">Code</span>
+                    <span class="social-card-name">GitHub</span>
+                  </div>
+                  <i class="social-card-icon fa-brands fa-github"></i>
+                </div>
+              </a>
+              <a href="#" class="social-card">
+                <div class="social-card-background"></div>
+                <div class="social-card-content">
+                  <div class="social-card-content-header">
+                    <span class="social-card-label">Career</span>
+                    <span class="social-card-name">LinkedIn</span>
+                  </div>
+                  <i class="social-card-icon fa-brands fa-linkedin"></i>
+                </div>
+              </a>
+              <a href="#" class="social-card">
+                <div class="social-card-background"></div>
+                <div class="social-card-content">
+                  <div class="social-card-content-header">
+                    <span class="social-card-label">Chat</span>
+                    <span class="social-card-name">Telegram</span>
+                  </div>
+                  <i class="social-card-icon fa-brands fa-telegram"></i>
+                </div>
+              </a>
+              <a href="#" class="social-card">
+                <div class="social-card-background"></div>
+                <div class="social-card-content">
+                  <div class="social-card-content-header">
+                    <span class="social-card-label">Photos</span>
+                    <span class="social-card-name">Instagram</span>
+                  </div>
+                  <i class="social-card-icon fa-brands fa-instagram"></i>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- Gallery Section (Was Movies) -->
+          <div id="gallery-section" class="menu-section">
+            <div class="menu-section-title">
+              <i class="fa-solid fa-camera-retro"></i>
+              <span class="menu-section-title-text">Moments</span>
+            </div>
+            <div class="menu-section-content scrollable-component">
+              <div class="gallery-card">
+                <div class="gallery-card-content">
+                  <div class="gallery-card-info">
+                    <span class="gallery-card-title">Kyiv City Center</span>
+                    <span class="gallery-card-desc">Urban Exploration</span>
+                  </div>
+                </div>
+                <img class="gallery-card-background"
+                  src="https://images.unsplash.com/photo-1569050965313-2d2c771765c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" />
+              </div>
+              <div class="gallery-card">
+                <div class="gallery-card-content">
+                  <div class="gallery-card-info">
+                    <span class="gallery-card-title">Carpathians</span>
+                    <span class="gallery-card-desc">Hiking & Nature</span>
+                  </div>
+                </div>
+                <img class="gallery-card-background"
+                  src="https://images.unsplash.com/photo-1549221193-ea33f39d22f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" />
+              </div>
+              <div class="gallery-card">
+                <div class="gallery-card-content">
+                  <div class="gallery-card-info">
+                    <span class="gallery-card-title">Coffee Break</span>
+                    <span class="gallery-card-desc">Favorite Spots</span>
+                  </div>
+                </div>
+                <img class="gallery-card-background"
+                  src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" />
+              </div>
+              <div class="gallery-card">
+                <div class="gallery-card-content">
+                  <div class="gallery-card-info">
+                    <span class="gallery-card-title">Night Lights</span>
+                    <span class="gallery-card-desc">City vibes</span>
+                  </div>
+                </div>
+                <img class="gallery-card-background"
+                  src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" />
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Log In Button Wrapper -->
+    <div id="sign-in-button-wrapper">
+      <button id="sign-in-button" class="user-status-button clear-button" type="button">
+        <i class="fa-solid fa-arrow-right-to-arc"></i>
+      </button>
+    </div>
+
+    <!-- Loading Icon -->
+    <div id="app-loading-icon">
+      <i class="fa-solid fa-spinner-third"></i>
+    </div>
+
+  </div>
+
+  <script src="./dycalendar.js"></script>
+  <script src="./script.js"></script>
+</body>
+
+</html>
